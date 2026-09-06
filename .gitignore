@@ -1,0 +1,5 @@
+games/
+__pycache__/
+*.py[cod]
+.agents/
+.codex/

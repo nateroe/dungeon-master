@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dungeon Master"
+  short_description: "Run consistent, persistent, replayable text adventures"
+  default_prompt: "Use $dungeon-master to run a persistent text adventure with a replayable world."

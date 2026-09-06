@@ -1,0 +1,546 @@
+{
+  "schema_version": 1,
+  "world": {
+    "title": "The Lantern Vault",
+    "preferences": {
+      "genre": "quiet fantasy",
+      "tone": "eerie",
+      "length": "short",
+      "difficulty": "gentle with an optional lethal shortcut",
+      "character": "a traveler with basic tools",
+      "save_policy": "restart from origin"
+    },
+    "locations": {
+      "hall": "An abandoned entrance hall with a cold lantern stand.",
+      "study": "A dry study; a brass key lies beneath the loose desk drawer.",
+      "gallery": "A portrait gallery; a carved inscription gives the vault password: ember.",
+      "vault": "The lantern vault, whose guardian accepts its password or an opened lock.",
+      "alcove": "An optional side alcove containing a silver moth pin."
+    },
+    "edges": [
+      {
+        "from": "hall",
+        "to": "study",
+        "action": "go-hall-study"
+      },
+      {
+        "from": "study",
+        "to": "hall",
+        "action": "go-study-hall"
+      },
+      {
+        "from": "study",
+        "to": "gallery",
+        "action": "go-study-gallery"
+      },
+      {
+        "from": "gallery",
+        "to": "study",
+        "action": "go-gallery-study"
+      },
+      {
+        "from": "gallery",
+        "to": "hall",
+        "action": "go-gallery-hall"
+      },
+      {
+        "from": "hall",
+        "to": "gallery",
+        "action": "go-hall-gallery"
+      },
+      {
+        "from": "gallery",
+        "to": "alcove",
+        "action": "go-gallery-alcove"
+      },
+      {
+        "from": "alcove",
+        "to": "gallery",
+        "action": "go-alcove-gallery"
+      },
+      {
+        "from": "vault",
+        "to": "hall",
+        "action": "go-vault-hall"
+      },
+      {
+        "from": "hall",
+        "to": "vault",
+        "action": "enter-vault"
+      }
+    ],
+    "items": {
+      "brass-key": "A brittle brass key.",
+      "moth-pin": "A silver moth pin."
+    },
+    "npcs": {
+      "guardian": "A stone guardian appointed to admit speakers of the password; it begins knowing that password."
+    },
+    "facts": {
+      "password": "The vault password is ember."
+    }
+  },
+  "plot": {
+    "variables": {
+      "location": {
+        "domain": [
+          "hall",
+          "study",
+          "gallery",
+          "vault",
+          "alcove"
+        ],
+        "role": "location"
+      },
+      "status": {
+        "domain": [
+          "playing",
+          "won",
+          "lost"
+        ],
+        "role": "status"
+      },
+      "key": {
+        "domain": [
+          "study",
+          "inventory",
+          "consumed"
+        ],
+        "role": "item",
+        "ref": "brass-key"
+      },
+      "pin": {
+        "domain": [
+          "alcove",
+          "inventory"
+        ],
+        "role": "item",
+        "ref": "moth-pin"
+      },
+      "guardian_at": {
+        "domain": [
+          "vault",
+          "absent",
+          "dead"
+        ],
+        "role": "npc_location",
+        "ref": "guardian"
+      },
+      "password": {
+        "domain": [
+          false,
+          true
+        ],
+        "role": "knowledge",
+        "ref": "password",
+        "owner": "player"
+      },
+      "guardian_password": {
+        "domain": [
+          false,
+          true
+        ],
+        "role": "knowledge",
+        "ref": "password",
+        "owner": "guardian"
+      },
+      "door_open": {
+        "domain": [
+          false,
+          true
+        ],
+        "role": "flag"
+      },
+      "pick_attempted": {
+        "domain": [
+          false,
+          true
+        ],
+        "role": "flag"
+      }
+    },
+    "actions": {
+      "go-hall-study": {
+        "requires": {
+          "all": []
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "study"
+            }
+          }
+        ],
+        "ruling": "Unhurried travel; no active clock or random danger."
+      },
+      "go-study-hall": {
+        "requires": {
+          "all": []
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "hall"
+            }
+          }
+        ],
+        "ruling": "Unhurried travel; no active clock or random danger."
+      },
+      "go-study-gallery": {
+        "requires": {
+          "all": []
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "gallery"
+            }
+          }
+        ],
+        "ruling": "Unhurried travel; no active clock or random danger."
+      },
+      "go-gallery-study": {
+        "requires": {
+          "all": []
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "study"
+            }
+          }
+        ],
+        "ruling": "Unhurried travel; no active clock or random danger."
+      },
+      "go-gallery-hall": {
+        "requires": {
+          "all": []
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "hall"
+            }
+          }
+        ],
+        "ruling": "Unhurried travel; no active clock or random danger."
+      },
+      "go-hall-gallery": {
+        "requires": {
+          "all": []
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "gallery"
+            }
+          }
+        ],
+        "ruling": "Unhurried travel; no active clock or random danger."
+      },
+      "go-gallery-alcove": {
+        "requires": {
+          "all": []
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "alcove"
+            }
+          }
+        ],
+        "ruling": "Unhurried travel; no active clock or random danger."
+      },
+      "go-alcove-gallery": {
+        "requires": {
+          "all": []
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "gallery"
+            }
+          }
+        ],
+        "ruling": "Unhurried travel; no active clock or random danger."
+      },
+      "go-vault-hall": {
+        "requires": {
+          "all": []
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "hall"
+            }
+          }
+        ],
+        "ruling": "Unhurried travel; no active clock or random danger."
+      },
+      "search-study": {
+        "requires": {
+          "all": [
+            {
+              "eq": [
+                "location",
+                "study"
+              ]
+            },
+            {
+              "eq": [
+                "key",
+                "study"
+              ]
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "key": "inventory"
+            }
+          }
+        ],
+        "ruling": "Take 20: careful searching finds the accessible key; no time pressure or cost of failure."
+      },
+      "read-inscription": {
+        "requires": {
+          "all": [
+            {
+              "eq": [
+                "location",
+                "gallery"
+              ]
+            },
+            {
+              "eq": [
+                "password",
+                false
+              ]
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "password": true
+            }
+          }
+        ],
+        "ruling": "The visible inscription teaches the character the password; source: gallery carving."
+      },
+      "take-pin": {
+        "requires": {
+          "all": [
+            {
+              "eq": [
+                "location",
+                "alcove"
+              ]
+            },
+            {
+              "eq": [
+                "pin",
+                "alcove"
+              ]
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "pin": "inventory"
+            }
+          }
+        ],
+        "ruling": "Pick up the optional pin without a check."
+      },
+      "unlock": {
+        "requires": {
+          "all": [
+            {
+              "eq": [
+                "location",
+                "hall"
+              ]
+            },
+            {
+              "eq": [
+                "key",
+                "inventory"
+              ]
+            },
+            {
+              "eq": [
+                "door_open",
+                false
+              ]
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "door_open": true,
+              "key": "consumed"
+            }
+          }
+        ],
+        "ruling": "The brittle key opens the door and breaks in its lock; deterministic."
+      },
+      "pick-lock": {
+        "attempt": "pick_attempted",
+        "requires": {
+          "all": [
+            {
+              "eq": [
+                "location",
+                "hall"
+              ]
+            },
+            {
+              "eq": [
+                "door_open",
+                false
+              ]
+            },
+            {
+              "eq": [
+                "pick_attempted",
+                false
+              ]
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "id": "opened",
+            "weight": 3,
+            "set": {
+              "door_open": true,
+              "pick_attempted": true
+            }
+          },
+          {
+            "id": "injured-fatally",
+            "weight": 1,
+            "set": {
+              "status": "lost",
+              "pick_attempted": true
+            }
+          }
+        ],
+        "ruling": "Optional dangerous bypass: 75% opens the lock, 25% releases a lethal needle. Needle holes are visible; communicate danger before accepting this action. One attempt only."
+      },
+      "enter-vault": {
+        "requires": {
+          "any": [
+            {
+              "eq": [
+                "door_open",
+                true
+              ]
+            },
+            {
+              "all": [
+                {
+                  "eq": [
+                    "password",
+                    true
+                  ]
+                },
+                {
+                  "eq": [
+                    "guardian_password",
+                    true
+                  ]
+                },
+                {
+                  "eq": [
+                    "guardian_at",
+                    "vault"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "location": "vault"
+            }
+          }
+        ],
+        "ruling": "Open door or speak the learned password to the guardian; deterministic. Guardian knows the password from its appointment, recorded initially."
+      },
+      "claim-lantern": {
+        "requires": {
+          "eq": [
+            "location",
+            "vault"
+          ]
+        },
+        "outcomes": [
+          {
+            "id": "success",
+            "weight": 1,
+            "set": {
+              "status": "won"
+            }
+          }
+        ],
+        "ruling": "Recover the beacon and complete the adventure."
+      }
+    },
+    "invariants": [],
+    "time_policy": {
+      "mode": "none",
+      "rule": "No deadlines or autonomous NPC movement; harmless achievable tasks use take 20."
+    },
+    "assumptions": [
+      "Victory means recovering the beacon in the vault.",
+      "All progression gates, critical item ownership, password knowledge, and random outcomes are represented.",
+      "Movement follows directed edges; no other time costs or offscreen threats affect this bounded adventure."
+    ]
+  },
+  "state": {
+    "location": "hall",
+    "status": "playing",
+    "key": "study",
+    "pin": "alcove",
+    "guardian_at": "vault",
+    "password": false,
+    "guardian_password": true,
+    "door_open": false,
+    "pick_attempted": false
+  }
+}
